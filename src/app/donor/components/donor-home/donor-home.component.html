@@ -1,3 +1,68 @@
-<p>
-  donor-home works!
-</p>
+<form [formGroup]="donorForm" (ngSubmit)="doPayment();">
+  <p-fieldset legend="Donation Information" [toggleable]="true">
+    <div class="form-group">
+      <label>Scheme:</label>
+      <select class="form-control" formControlName="schemename" required>
+            <option>1</option>
+            <option>1</option>
+            <option>1</option>
+            <option>1</option>
+      </select>  
+      <div *ngIf="donorControl.schemename.invalid && (donorControl.schemename.dirty || donorControl.schemename.touched)" class="alert alert-danger">
+          <div *ngIf="donorControl.schemename.errors.required">
+              please select the scheme.
+          </div>
+      </div>
+
+      <label>Amount:</label>
+          <input type="number" min=10 class="form-control" formControlName="amount" placeholder="Please enter the amount you want to donate">
+          <div *ngIf="donorControl.amount.invalid && (donorControl.amount.dirty || donorControl.amount.touched)" class="alert alert-danger">
+              <div *ngIf="donorControl.amount.errors.required">
+                  amount is required.
+              </div>
+          </div>
+          <label>Description:</label>
+          <input type="text" class="form-control" formControlName="description" placeholder="Please enter the description">
+          <div *ngIf="donorControl.description.invalid && (donorControl.description.dirty || donorControl.description.touched)" class="alert alert-danger">
+              <div *ngIf="donorControl.description.errors.required">
+                  amount is required.
+              </div>
+          </div>          
+  </div>
+
+  </p-fieldset>
+  <br>
+  <p-fieldset legend="Payment Information" [toggleable]="true">
+    <div class="form-group">
+      <label>Donar name:</label>
+          <input type="text" class="form-control" formControlName="donorname" placeholder="Please enter donor name">
+          <div *ngIf="donorControl.donorname.invalid && (donorControl.donorname.dirty || donorControl.donorname.touched)" class="alert alert-danger">
+              <div *ngIf="donorControl.donorname.errors.required">
+                  Donor name is required.
+              </div>
+          </div>
+      <label>Donor email:</label>
+      <input type="email" class="form-control" formControlName="donoremail" placeholder="Please enter donor email address">
+      <div *ngIf="donorControl.donoremail.invalid && (donorControl.donoremail.dirty || donorControl.donoremail.touched)" class="alert alert-danger">
+          <div *ngIf="donorControl.donoremail.errors.required">
+              Donor email is required.
+          </div>
+      </div>
+      <label>Donor PAN:</label>
+      <input type="email" class="form-control" formControlName="donorpan" placeholder="Please enter donor PAN number">
+      <div *ngIf="donorControl.donorpan.invalid && (donorControl.donorpan.dirty || donorControl.donorpan.touched)" class="alert alert-danger">
+          <div *ngIf="donorControl.donorpan.errors.required">
+              Donor PAN is required.
+          </div>
+      </div>
+      <label>Donor debit/credit card number:</label>
+      <input type="email" class="form-control" formControlName="donorcrdr" placeholder="Please enter Credit/Debit card number">
+      <div *ngIf="donorControl.donorcrdr.invalid && (donorControl.donorcrdr.dirty || donorControl.donorcrdr.touched)" class="alert alert-danger">
+          <div *ngIf="donorControl.donorcrdr.errors.required">
+              Donor card information is required.
+          </div>
+      </div>                         
+  </div>
+    <button type="submit"  [disabled]="donorForm.invalid" class="btn btn-outline-primary">Do payment</button>
+  </p-fieldset>
+</form>
