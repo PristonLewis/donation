@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from '../../../shared/services/http.service';
-import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 
 @Component({
@@ -11,7 +10,7 @@ import swal from 'sweetalert2';
 })
 export class DonorHomeComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private http: HttpService, private route: Router) { }
+  constructor(private formBuilder: FormBuilder, private http: HttpService) { }
 
   public donorForm = new FormGroup({
     donationSchemeId: new FormControl(),
@@ -24,16 +23,19 @@ export class DonorHomeComponent implements OnInit {
   public donationAmount: number;
   public taxBenefit: number;
   public description: string = '';
+  public loader: boolean = false;
+
   ngOnInit() {
     this.createForm();
     this.getSchemeNames();
   }
 
-    getSchemeNames() {
+  // Function to get all the schemes
+  getSchemeNames() {
       this.http.getRequest('/donations/schemes').subscribe((data) => {
         this.listOfSchemes = data.listOfSchemes;
       });
-    }
+  }
 
     // gets donor form controls
     get donorControl() { return this.donorForm.controls; }
@@ -60,17 +62,22 @@ export class DonorHomeComponent implements OnInit {
       });
     }
 
+    // Function which is responsible for doing the payment
     doPayment() {
+      this.loader = true;
       const payload = this.donorForm.value;
       payload.cardType = 'Debit card';
       payload.taxBenefitAmount = this.taxBenefit.toString();
       this.http.postRequest('/donations/paymentDetails', payload).subscribe((data) => {
-        swal.fire('Success');
+        swal.fire('Donation done succesfully, Transaction details has been sent to your email');
+        this.loader = false;
       }, (exception) => {
         swal.fire('Fail');
+        this.loader = false;
       });
     }
 
+    // filters the array and get the selected value
     updateDonationAmount() {
       const filteredObject = this.listOfSchemes.find((data) => {
         return Number(this.donorForm.value.donationSchemeId) === Number(data.donationSchemeId);

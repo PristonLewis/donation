@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpService } from '../../../shared/services/http.service';
 import { Router } from '@angular/router';
-
+import swal from 'sweetalert2';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -41,6 +41,8 @@ export class LoginComponent implements OnInit {
     this.http.postRequest('users/login', this.loginForm.value).subscribe((data: any) => {
       localStorage.setItem('adminid', data.userId);
       this.route.navigate(['/adminhome']);
+    }, (except) => {
+      swal.fire('Invalid username/password');
     });
   }
 

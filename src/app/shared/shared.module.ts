@@ -9,8 +9,9 @@ import { HttpService } from './services/http.service';
   declarations: [LoaderComponent, ErrorComponent],
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
   ],
+  exports: [LoaderComponent, ErrorComponent],
   providers: [HttpService]
 })
 export class SharedModule { }
