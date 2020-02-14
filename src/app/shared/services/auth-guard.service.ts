@@ -1,9 +1,18 @@
+
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuardService {
 
-  constructor() { }
+  constructor(public router: Router) { }
+  canActivate(): boolean {
+    if (localStorage.getItem('adminid') === '' || localStorage.getItem('adminid') === null) {
+      this.router.navigate(['/']);
+      return false;
+    }
+    return true;
+  }
 }

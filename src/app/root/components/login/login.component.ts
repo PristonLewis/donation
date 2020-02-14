@@ -38,9 +38,9 @@ export class LoginComponent implements OnInit {
   // checks whether the user is authorized
   public login(): void {
     console.log('loginFrom', this.loginForm.value);
-    this.http.postRequest('users/login', this.loginForm.value).subscribe((data) => {
-      localStorage.setItem('doctorid', data.doctorId);
-      this.route.navigate(['/doctorsview']);
+    this.http.postRequest('users/login', this.loginForm.value).subscribe((data: any) => {
+      localStorage.setItem('adminid', data.userId);
+      this.route.navigate(['/adminhome']);
     });
   }
 
