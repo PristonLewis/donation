@@ -1,0 +1,32 @@
+<div class="row row justify-content-md-center">
+  <div class="col-sm-4 ">
+      <h4>Login</h4><br>
+      <form [formGroup]="loginForm" (ngSubmit)="login();">
+      <div class="form-group">
+          <label>Mobile Number:</label>
+          <input type="number" class="form-control" formControlName="mobile" placeholder="Please enter the mobile number" required>
+          <div *ngIf="loginControl.mobile.invalid && (loginControl.mobile.dirty || loginControl.mobile.touched)" class="alert alert-danger">
+              <div *ngIf="loginControl.mobile.errors.required">
+                  mobile number is required.
+              </div>
+              <div *ngIf="loginControl.mobile.errors.minlength">
+                  mobile number must be 10 characters long.
+              </div>
+          </div>
+
+          <label>Password:</label>
+              <input class="form-control" formControlName="password" placeholder="Please enter the password">
+              <div *ngIf="loginControl.password.invalid && (loginControl.password.dirty || loginControl.password.touched)" class="alert alert-danger">
+                  <div *ngIf="loginControl.password.errors.required">
+                      Password is required.
+                  </div>
+                  <div *ngIf="loginControl.password.errors.minlength">
+                      Password must be at least 8 characters long.
+                  </div>
+              </div><br>
+          <button type="submit"  [disabled]="loginForm.invalid" class="btn btn-primary">Doctor Login</button>
+          <button type="button"  (click)="patientLogin()" class="btn btn-primary">Patient Login</button>
+      </div>
+      </form>
+  </div>    
+</div>
